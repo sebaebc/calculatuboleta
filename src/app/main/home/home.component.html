@@ -1,0 +1,72 @@
+<section class="mt-5 pt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <form [formGroup]="boletaForm" (ngSubmit)="onSubmit()">
+                    <div class="form-group">
+                        <label for="monto">Monto</label>
+                        <input id="monto" type="text" class="form-control" formControlName="monto" (keyup)="onSubmit()"
+                            required placeholder="Ej: 100000">
+                    </div>
+                    <fieldset class="form-group">
+                        <div class="row">
+                            <legend class="col-form-label col-sm-2 pt-0">Porcentaje de Retención</legend>
+                            <div class="col-sm-10">
+                                <div class="form-check">
+                                    <input id="porcentaje-1" class="form-check-input" type="radio" value="10.75"
+                                        name="porcentaje" formControlName="porcentaje">
+                                    <label class="form-check-label" for="porcentaje-1">
+                                        10,75%
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input id="porcentaje-2" class="form-check-input" type="radio" value="10"
+                                        formControlName="porcentaje" name="porcentaje">
+                                    <label class="form-check-label" for="porcentaje-2">
+                                        10%
+                                    </label>
+                                </div>
+                                <div class="form-check disabled">
+                                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3"
+                                        value="option3" disabled>
+                                    <label class="form-check-label" for="gridRadios3">
+                                        Personalizado
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary btn-block"
+                                [disabled]="!boletaForm.valid">Calcular</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <ng-container *ngIf="boletaForm.valid">
+            <div class="row">
+                <div class="col-6">
+                    <h4>LÍQUIDO</h4>
+                    <p>
+                        Si lo pactado fue en valores líquidos, deberás hacer la boleta por
+                        {{resultadoBruto | currency:'CLP':'$':'0.0'}} y recibirás
+                        {{resultadoLiquido | currency:'CLP':'$':'0.0'}}
+                    </p>
+                </div>
+                <div class="col-6">
+                    <h4>BRUTO</h4>
+                    <p>
+                        Si lo pactado fue en valores brutos, deberás hacer la boleta por
+                        {{boletaForm.controls['monto'].value | currency:'CLP':'$':'0.0'}} y recibirás
+                        {{resultadoLiquido | currency:'CLP':'$':'0.0'}}
+                    </p>
+                </div>
+            </div>
+        </ng-container>
+
+    </div>
+
+
+</section>
